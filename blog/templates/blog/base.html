@@ -1,0 +1,89 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Rozvi{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+  </head>
+  <body class="min-h-screen bg-white font-sans text-gray-900 antialiased flex flex-col">
+    <header class="sticky top-0 z-50 border-b border-gray-200 bg-white/90 backdrop-blur">
+      <div class="mx-auto flex h-14 max-w-[1336px] items-center justify-between gap-4 px-4 sm:px-6">
+        <div class="flex items-center gap-6">
+          <a href="{% url 'blog-home' %}" class="font-serif text-2xl font-bold tracking-tight text-gray-900">
+            Rozvi
+          </a>
+          <label class="hidden items-center gap-2 rounded-full bg-gray-100 px-4 py-1.5 text-sm text-gray-500 md:flex">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4 shrink-0">
+              <circle cx="11" cy="11" r="7" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M21 21l-4.3-4.3" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <input type="text" placeholder="Search" class="w-32 bg-transparent placeholder-gray-500 outline-none lg:w-48" />
+          </label>
+        </div>
+
+        <nav class="flex items-center gap-5">
+          <a href="#" class="hidden items-center gap-1.5 text-sm text-gray-700 hover:text-gray-900 md:flex">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5">
+              <path d="M12 20h9" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Write
+          </a>
+          <a href="#" class="hidden text-sm text-gray-700 hover:text-gray-900 sm:block">Sign in</a>
+          <a href="#" class="rounded-full bg-gray-900 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-gray-700">
+            Get started
+          </a>
+          <button type="button" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="-mr-1 text-gray-700 md:hidden" aria-label="Toggle menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-6 w-6">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </nav>
+      </div>
+
+      <div id="mobile-menu" class="hidden border-t border-gray-200 px-4 py-3 md:hidden">
+        <label class="mb-3 flex items-center gap-2 rounded-full bg-gray-100 px-4 py-1.5 text-sm text-gray-500">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4 shrink-0">
+            <circle cx="11" cy="11" r="7" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M21 21l-4.3-4.3" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <input type="text" placeholder="Search" class="w-full bg-transparent placeholder-gray-500 outline-none" />
+        </label>
+        <div class="flex flex-col gap-3 text-sm text-gray-700">
+          <a href="#" class="flex items-center gap-1.5 hover:text-gray-900">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5">
+              <path d="M12 20h9" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Write
+          </a>
+          <a href="#" class="hover:text-gray-900">Sign in</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="border-t border-gray-200">
+      <div class="mx-auto max-w-[1336px] px-4 py-6 sm:px-6">
+        <nav class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-500">
+          <a href="{% url 'blog-about' %}" class="hover:text-gray-800 hover:underline">About</a>
+          <a href="#" class="hover:text-gray-800 hover:underline">Help</a>
+          <a href="#" class="hover:text-gray-800 hover:underline">Status</a>
+          <a href="#" class="hover:text-gray-800 hover:underline">Careers</a>
+          <a href="#" class="hover:text-gray-800 hover:underline">Press</a>
+          <a href="#" class="hover:text-gray-800 hover:underline">Privacy</a>
+          <a href="#" class="hover:text-gray-800 hover:underline">Terms</a>
+          <a href="#" class="hover:text-gray-800 hover:underline">Text to speech</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

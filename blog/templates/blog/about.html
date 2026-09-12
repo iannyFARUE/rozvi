@@ -1,11 +1,13 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <h1>ABOUT MAGARATIA</h1>
-  </body>
-</html>
+{% extends 'blog/base.html' %}
+
+{% block title %}About — Rozvi{% endblock %}
+
+{% block content %}
+  <div class="mx-auto max-w-2xl px-4 py-20 sm:px-6">
+    <h1 class="font-serif text-4xl font-bold text-gray-900 sm:text-5xl">About Rozvi</h1>
+    <p class="mt-6 text-lg leading-relaxed text-gray-600">
+      Rozvi is a personal blog for essays on code, careers, and everything in
+      between — a place to read, write, and think out loud.
+    </p>
+  </div>
+{% endblock %}
