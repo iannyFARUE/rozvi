@@ -1,7 +1,8 @@
 import random
 
 from django.conf import settings
-from django.db import models
+from django.db import models, transaction
+from django.db.models import F
 from django.utils import timezone
 from django.utils.text import Truncator, slugify
 
@@ -48,7 +49,7 @@ class Post(models.Model):
     read_time = models.PositiveSmallIntegerField(
         default=0, help_text='Estimated reading time in minutes; auto-calculated if left blank.'
     )
-    claps = models.PositiveIntegerField(default=0)
+    claps_count = models.PositiveIntegerField(default=0, editable=False)
     featured = models.BooleanField(default=False)
     date_posted = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
@@ -81,6 +82,40 @@ class Post(models.Model):
     @property
     def comment_count(self):
         return self.comments.count()
+
+    def add_clap(self, user, amount=1):
+        """Record `amount` claps from `user`, capped per user, and keep claps_count in sync."""
+        if amount < 1:
+            raise ValueError('amount must be at least 1')
+        with transaction.atomic():
+            clap, _ = Clap.objects.select_for_update().get_or_create(post=self, user=user)
+            granted = min(amount, Clap.MAX_CLAPS_PER_USER - clap.count)
+            if granted <= 0:
+                return clap
+            clap.count += granted
+            clap.save(update_fields=['count', 'updated_at'])
+            Post.objects.filter(pk=self.pk).update(claps_count=F('claps_count') + granted)
+            self.claps_count += granted
+        return clap
+
+
+class Clap(models.Model):
+    MAX_CLAPS_PER_USER = 50
+
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='claps')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='claps')
+    count = models.PositiveSmallIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['post', 'user'], name='one_clap_row_per_user_per_post'),
+        ]
+        ordering = ['-updated_at']
+
+    def __str__(self):
+        return f'{self.user} clapped {self.count}x on "{self.post}"'
 
 
 class Comment(models.Model):

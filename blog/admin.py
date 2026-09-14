@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.text import Truncator
 
-from .models import Comment, Post, Profile
+from .models import Clap, Comment, Post, Profile
 
 
 class CommentInline(admin.TabularInline):
@@ -13,12 +13,20 @@ class CommentInline(admin.TabularInline):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'topic', 'featured', 'claps', 'date_posted')
+    list_display = ('title', 'author', 'topic', 'featured', 'claps_count', 'date_posted')
     list_filter = ('topic', 'featured', 'date_posted')
     search_fields = ('title', 'excerpt', 'content', 'author__username')
     prepopulated_fields = {'slug': ('title',)}
+    readonly_fields = ('claps_count',)
     date_hierarchy = 'date_posted'
     inlines = [CommentInline]
+
+
+@admin.register(Clap)
+class ClapAdmin(admin.ModelAdmin):
+    list_display = ('post', 'user', 'count', 'updated_at')
+    list_filter = ('updated_at',)
+    search_fields = ('post__title', 'user__username')
 
 
 @admin.register(Comment)
