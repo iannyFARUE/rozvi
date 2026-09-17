@@ -1,0 +1,72 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Sign in — Rozvi{% endblock %}
+
+{% block content %}
+  <div class="flex min-h-[70vh] items-center justify-center px-4 py-12 sm:px-6">
+    <div class="w-full max-w-md">
+      <div class="text-center">
+        <h1 class="font-serif text-4xl font-bold text-gray-900">Welcome back.</h1>
+        <p class="mt-2 text-gray-600">Sign in to keep reading and writing.</p>
+      </div>
+
+      <form method="post" action="" class="mt-10 space-y-5" novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}" />
+
+        {% if form.non_field_errors %}
+        <div class="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {% for error in form.non_field_errors %}
+          <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <div>
+          <label for="id_username" class="mb-1.5 block text-sm font-medium text-gray-700">Username</label>
+          <input
+            type="text"
+            name="username"
+            id="id_username"
+            value="{{ form.username.value|default:'' }}"
+            required
+            autocomplete="username"
+            placeholder="janedoe"
+            class="w-full rounded-md border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900"
+          />
+          {% if form.username.errors %}
+          <p class="mt-1.5 text-sm text-red-600">{{ form.username.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <div>
+          <label for="id_password" class="mb-1.5 block text-sm font-medium text-gray-700">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="id_password"
+            required
+            autocomplete="current-password"
+            placeholder="Your password"
+            class="w-full rounded-md border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900"
+          />
+          {% if form.password.errors %}
+          <p class="mt-1.5 text-sm text-red-600">{{ form.password.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <button
+          type="submit"
+          class="w-full rounded-full bg-gray-900 px-4 py-3 text-sm font-medium text-white transition hover:bg-gray-700"
+        >
+          Sign in
+        </button>
+      </form>
+
+      <p class="mt-8 text-center text-sm text-gray-500">
+        New to Rozvi?
+        <a href="{% url 'users-register' %}" class="font-medium text-gray-900 hover:underline">Create an account</a>
+      </p>
+    </div>
+  </div>
+{% endblock %}
