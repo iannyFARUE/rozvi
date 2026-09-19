@@ -1,10 +1,12 @@
 import random
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models, transaction
 from django.db.models import F
 from django.utils import timezone
 from django.utils.text import Truncator, slugify
+from PIL import Image
 
 AVATAR_COLORS = [
     'bg-emerald-600',
@@ -15,11 +17,26 @@ AVATAR_COLORS = [
     'bg-violet-600',
 ]
 
+MAX_AVATAR_SIZE_MB = 5
+AVATAR_DIMENSIONS = (300, 300)
+
+
+def validate_avatar_size(image):
+    if image.size > MAX_AVATAR_SIZE_MB * 1024 * 1024:
+        raise ValidationError(f'Image file too large. Maximum size is {MAX_AVATAR_SIZE_MB}MB.')
+
+
+def profile_avatar_upload_path(instance, filename):
+    return f'profile_pics/user_{instance.user_id}/{filename}'
+
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
     bio = models.CharField(max_length=300, blank=True)
     avatar_color = models.CharField(max_length=20, choices=[(c, c) for c in AVATAR_COLORS], blank=True)
+    avatar = models.ImageField(
+        upload_to=profile_avatar_upload_path, blank=True, null=True, validators=[validate_avatar_size]
+    )
 
     def __str__(self):
         return f"{self.user.username}'s profile"
@@ -28,6 +45,12 @@ class Profile(models.Model):
         if not self.avatar_color:
             self.avatar_color = random.choice(AVATAR_COLORS)
         super().save(*args, **kwargs)
+
+        if self.avatar:
+            img = Image.open(self.avatar.path)
+            if img.height > AVATAR_DIMENSIONS[1] or img.width > AVATAR_DIMENSIONS[0]:
+                img.thumbnail(AVATAR_DIMENSIONS)
+                img.save(self.avatar.path)
 
     @property
     def display_name(self):

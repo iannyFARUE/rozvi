@@ -36,7 +36,7 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['bio']
+        fields = ['avatar', 'bio']
         widgets = {
             'bio': forms.Textarea(attrs={'rows': 3, 'maxlength': 300}),
         }

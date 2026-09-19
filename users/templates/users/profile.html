@@ -4,19 +4,28 @@
 
 {% block content %}
   <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
-    <div class="flex flex-col items-center gap-5 text-center sm:flex-row sm:items-start sm:text-left">
-      <span class="flex h-20 w-20 shrink-0 items-center justify-center rounded-full {{ user.profile.avatar_color }} text-2xl font-semibold text-white">
-        {{ user.profile.initials }}
-      </span>
+    <form method="post" action="" enctype="multipart/form-data" class="flex flex-col items-center gap-5 text-center sm:flex-row sm:items-start sm:text-left" novalidate>
+      {% csrf_token %}
+
+      <div class="flex shrink-0 flex-col items-center gap-2">
+        {% include 'blog/includes/avatar.html' with profile=user.profile classes='h-20 w-20 text-2xl' %}
+        <label for="id_avatar" class="cursor-pointer text-xs font-medium text-gray-700 hover:text-gray-900 hover:underline">
+          Change photo
+        </label>
+        <input type="file" name="avatar" id="id_avatar" accept="image/*" class="hidden" />
+        <p class="text-[11px] text-gray-400">JPG, PNG or GIF. Max 5MB.</p>
+        {% if p_form.avatar.errors %}
+        <p class="max-w-[9rem] text-xs text-red-600">{{ p_form.avatar.errors.0 }}</p>
+        {% endif %}
+      </div>
+
       <div class="w-full">
         <h1 class="font-serif text-3xl font-bold text-gray-900">{{ user.profile.display_name }}</h1>
         <p class="mt-1 text-sm text-gray-500">
           Joined {{ user.date_joined|date:"F Y" }} · {{ post_count }} {{ post_count|pluralize:"story,stories" }}
         </p>
 
-        <form method="post" action="" class="mt-6 space-y-4 text-left" novalidate>
-          {% csrf_token %}
-
+        <div class="mt-6 space-y-4 text-left">
           {% if u_form.non_field_errors or p_form.non_field_errors %}
           <div class="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             {% for error in u_form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
@@ -77,9 +86,9 @@
           >
             Save changes
           </button>
-        </form>
+        </div>
       </div>
-    </div>
+    </form>
 
     <div class="mt-12 border-t border-gray-200 pt-8">
       <h2 class="font-serif text-xl font-bold text-gray-900">Your stories</h2>

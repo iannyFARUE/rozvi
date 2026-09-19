@@ -41,9 +41,7 @@
       <article class="group flex gap-4 py-8 sm:gap-6">
         <div class="min-w-0 flex-1">
           <div class="flex items-center gap-2 text-sm text-gray-700">
-            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full {{ post.author.profile.avatar_color }} text-[11px] font-semibold text-white">
-              {{ post.author.profile.initials }}
-            </span>
+            {% include 'blog/includes/avatar.html' with profile=post.author.profile classes='h-6 w-6 text-[11px]' %}
             <span class="font-medium text-gray-900">{{ post.author.profile.display_name }}</span>
             <span class="text-gray-400">·</span>
             <span class="text-gray-500">{{ post.date_posted|date:"M j, Y" }}</span>
@@ -93,9 +91,7 @@
             {% for post in staff_picks %}
             <div>
               <div class="flex items-center gap-2 text-xs text-gray-600">
-                <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full {{ post.author.profile.avatar_color }} text-[9px] font-semibold text-white">
-                  {{ post.author.profile.initials }}
-                </span>
+                {% include 'blog/includes/avatar.html' with profile=post.author.profile classes='h-5 w-5 text-[9px]' %}
                 <span class="font-medium text-gray-800">{{ post.author.profile.display_name }}</span>
               </div>
               <h4 class="mt-1.5 font-serif text-base font-bold leading-snug text-gray-900 hover:underline">
