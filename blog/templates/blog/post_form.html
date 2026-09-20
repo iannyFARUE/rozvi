@@ -1,0 +1,76 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Write a story — Rozvi{% endblock %}
+
+{% block content %}
+  <div class="mx-auto max-w-2xl px-4 py-10 sm:px-6">
+    <form method="post" action="" novalidate>
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+      <div class="mb-6 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+      </div>
+      {% endif %}
+
+      <div>
+        <input
+          type="text"
+          name="topic"
+          id="id_topic"
+          value="{{ form.topic.value|default:'' }}"
+          required
+          list="topic-suggestions"
+          placeholder="Topic (e.g. Software Engineering)"
+          class="w-auto rounded-full bg-gray-100 px-4 py-1.5 text-sm text-gray-700 placeholder-gray-500 outline-none focus:bg-gray-200"
+        />
+        <datalist id="topic-suggestions">
+          {% for topic in topics %}
+          <option value="{{ topic }}"></option>
+          {% endfor %}
+        </datalist>
+        {% if form.topic.errors %}
+        <p class="mt-1.5 text-sm text-red-600">{{ form.topic.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <div class="mt-6">
+        <input
+          type="text"
+          name="title"
+          id="id_title"
+          value="{{ form.title.value|default:'' }}"
+          required
+          placeholder="Title"
+          class="w-full border-0 p-0 font-serif text-4xl font-bold text-gray-900 placeholder-gray-300 outline-none focus:ring-0 sm:text-5xl"
+        />
+        {% if form.title.errors %}
+        <p class="mt-1.5 text-sm text-red-600">{{ form.title.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <div class="mt-4">
+        <textarea
+          name="content"
+          id="id_content"
+          required
+          rows="14"
+          placeholder="Tell your story..."
+          class="w-full resize-y border-0 p-0 text-lg leading-relaxed text-gray-800 placeholder-gray-400 outline-none focus:ring-0"
+        >{{ form.content.value|default:'' }}</textarea>
+        {% if form.content.errors %}
+        <p class="mt-1.5 text-sm text-red-600">{{ form.content.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <div class="mt-8 flex justify-end border-t border-gray-100 pt-6">
+        <button
+          type="submit"
+          class="rounded-full bg-gray-900 px-6 py-2.5 text-sm font-medium text-white transition hover:bg-gray-700"
+        >
+          Publish
+        </button>
+      </div>
+    </form>
+  </div>
+{% endblock %}
