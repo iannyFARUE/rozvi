@@ -107,6 +107,9 @@
               <span class="rounded-full bg-gray-100 px-3 py-1 font-medium text-gray-700">{{ post.topic }}</span>
               <span>{{ post.read_time }} min read</span>
               <span class="sm:ml-auto">{{ post.claps_count }} claps</span>
+              <a href="{% url 'blog-post-edit' post.pk %}" class="font-medium text-gray-700 hover:text-gray-900 hover:underline">
+                Edit
+              </a>
             </div>
           </div>
           <div
