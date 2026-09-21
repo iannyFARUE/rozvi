@@ -57,11 +57,16 @@ def post_create(request):
     return render(request, 'blog/post_form.html', {'form': form, 'topics': _distinct_topics()})
 
 
-@login_required
-def post_update(request, pk):
+def _get_owned_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if post.author != request.user:
-        raise PermissionDenied('You can only edit your own stories.')
+        raise PermissionDenied('You can only manage your own stories.')
+    return post
+
+
+@login_required
+def post_update(request, pk):
+    post = _get_owned_post(request, pk)
 
     if request.method == 'POST':
         form = PostForm(request.POST, instance=post)
@@ -73,6 +78,18 @@ def post_update(request, pk):
         form = PostForm(instance=post)
 
     return render(request, 'blog/post_form.html', {'form': form, 'topics': _distinct_topics(), 'post': post})
+
+
+@login_required
+def post_delete(request, pk):
+    post = _get_owned_post(request, pk)
+
+    if request.method == 'POST':
+        post.delete()
+        messages.success(request, 'Your story has been deleted.')
+        return redirect('blog-home')
+
+    return render(request, 'blog/post_confirm_delete.html', {'post': post})
 
 
 @require_POST

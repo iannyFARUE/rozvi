@@ -19,12 +19,14 @@
         <p class="text-xs text-gray-500">{{ post.date_posted|date:"M j, Y" }} · {{ post.read_time }} min read</p>
       </div>
       {% if user == post.author %}
-      <a
-        href="{% url 'blog-post-edit' post.pk %}"
-        class="ml-auto text-sm font-medium text-gray-700 hover:text-gray-900 hover:underline"
-      >
-        Edit
-      </a>
+      <div class="ml-auto flex items-center gap-4 text-sm font-medium">
+        <a href="{% url 'blog-post-edit' post.pk %}" class="text-gray-700 hover:text-gray-900 hover:underline">
+          Edit
+        </a>
+        <a href="{% url 'blog-post-delete' post.pk %}" class="text-red-600 hover:text-red-700 hover:underline">
+          Delete
+        </a>
+      </div>
       {% endif %}
     </div>
 
