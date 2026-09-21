@@ -48,7 +48,7 @@
           </div>
 
           <h2 class="mt-2 font-serif text-xl font-bold leading-snug text-gray-900 group-hover:underline sm:text-2xl">
-            <a href="#">{{ post.title }}</a>
+            <a href="{% url 'blog-post-detail' post.slug %}">{{ post.title }}</a>
           </h2>
           <p class="mt-1 hidden text-gray-600 sm:line-clamp-2">
             {{ post.excerpt }}
@@ -95,7 +95,7 @@
                 <span class="font-medium text-gray-800">{{ post.author.profile.display_name }}</span>
               </div>
               <h4 class="mt-1.5 font-serif text-base font-bold leading-snug text-gray-900 hover:underline">
-                <a href="#">{{ post.title }}</a>
+                <a href="{% url 'blog-post-detail' post.slug %}">{{ post.title }}</a>
               </h4>
               <span class="mt-1 block text-xs text-gray-500">{{ post.date_posted|date:"M j, Y" }}</span>
             </div>
@@ -122,36 +122,4 @@
       </div>
     </aside>
   </div>
-
-  <script>
-    function getCsrfToken() {
-      const match = document.cookie.match(/(?:^|; )csrftoken=([^;]+)/);
-      return match ? decodeURIComponent(match[1]) : '';
-    }
-
-    document.querySelectorAll('.js-clap-button').forEach((button) => {
-      button.addEventListener('click', async () => {
-        if (button.disabled) return;
-        button.disabled = true;
-        const countEl = button.querySelector('.js-clap-count');
-        try {
-          const response = await fetch(button.dataset.clapUrl, {
-            method: 'POST',
-            headers: { 'X-CSRFToken': getCsrfToken() },
-          });
-          const data = await response.json();
-          if (response.ok) {
-            countEl.textContent = data.claps_count;
-            button.classList.add('text-gray-900');
-          } else {
-            alert(data.error || 'Something went wrong. Please try again.');
-          }
-        } catch (err) {
-          console.error(err);
-        } finally {
-          button.disabled = false;
-        }
-      });
-    });
-  </script>
 {% endblock %}

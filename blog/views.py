@@ -33,6 +33,14 @@ def about(request):
     return render(request, 'blog/about.html')
 
 
+def post_detail(request, slug):
+    post = get_object_or_404(
+        Post.objects.select_related('author', 'author__profile'),
+        slug=slug,
+    )
+    return render(request, 'blog/post_detail.html', {'post': post})
+
+
 @login_required
 def post_create(request):
     if request.method == 'POST':

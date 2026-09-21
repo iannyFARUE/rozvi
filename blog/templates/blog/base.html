@@ -116,5 +116,37 @@
         </nav>
       </div>
     </footer>
+
+    <script>
+      function getCsrfToken() {
+        const match = document.cookie.match(/(?:^|; )csrftoken=([^;]+)/);
+        return match ? decodeURIComponent(match[1]) : '';
+      }
+
+      document.querySelectorAll('.js-clap-button').forEach((button) => {
+        button.addEventListener('click', async () => {
+          if (button.disabled) return;
+          button.disabled = true;
+          const countEl = button.querySelector('.js-clap-count');
+          try {
+            const response = await fetch(button.dataset.clapUrl, {
+              method: 'POST',
+              headers: { 'X-CSRFToken': getCsrfToken() },
+            });
+            const data = await response.json();
+            if (response.ok) {
+              countEl.textContent = data.claps_count;
+              button.classList.add('text-gray-900');
+            } else {
+              alert(data.error || 'Something went wrong. Please try again.');
+            }
+          } catch (err) {
+            console.error(err);
+          } finally {
+            button.disabled = false;
+          }
+        });
+      });
+    </script>
   </body>
 </html>
