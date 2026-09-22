@@ -52,5 +52,56 @@
         </svg>
       </button>
     </div>
+
+    <section id="comments" class="mt-10 border-t border-gray-100 pt-8">
+      <h2 class="font-serif text-xl font-bold text-gray-900">
+        {{ comments|length }} {{ comments|length|pluralize:'Response,Responses' }}
+      </h2>
+
+      {% if user.is_authenticated %}
+      <form method="post" action="{% url 'blog-comment-create' post.pk %}" class="mt-6">
+        {% csrf_token %}
+        <textarea
+          name="body"
+          rows="3"
+          required
+          placeholder="What are your thoughts?"
+          class="w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900"
+        ></textarea>
+        <div class="mt-3 flex justify-end">
+          <button
+            type="submit"
+            class="rounded-full bg-gray-900 px-5 py-2 text-sm font-medium text-white transition hover:bg-gray-700"
+          >
+            Respond
+          </button>
+        </div>
+      </form>
+      {% else %}
+      <p class="mt-6 text-sm text-gray-500">
+        <a href="{% url 'users-login' %}?next={{ request.path }}" class="font-medium text-gray-900 hover:underline">
+          Sign in
+        </a>
+        to leave a response.
+      </p>
+      {% endif %}
+
+      <div class="mt-8 space-y-6">
+        {% for comment in comments %}
+        <div class="flex gap-3">
+          {% include 'blog/includes/avatar.html' with profile=comment.author.profile classes='h-9 w-9 text-xs' %}
+          <div class="min-w-0 flex-1">
+            <div class="flex flex-wrap items-baseline gap-x-2">
+              <span class="text-sm font-medium text-gray-900">{{ comment.author.profile.display_name }}</span>
+              <span class="text-xs text-gray-500">{{ comment.created_at|date:"M j, Y" }}</span>
+            </div>
+            <p class="mt-1 text-sm text-gray-700">{{ comment.body|linebreaksbr }}</p>
+          </div>
+        </div>
+        {% empty %}
+        <p class="text-sm text-gray-500">No responses yet. Be the first to share your thoughts.</p>
+        {% endfor %}
+      </div>
+    </section>
   </article>
 {% endblock %}

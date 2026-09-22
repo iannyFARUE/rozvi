@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
-from .forms import PostForm
+from .forms import CommentForm, PostForm
 from .models import Post
 
 
@@ -38,7 +38,27 @@ def post_detail(request, slug):
         Post.objects.select_related('author', 'author__profile'),
         slug=slug,
     )
-    return render(request, 'blog/post_detail.html', {'post': post})
+    comments = post.comments.filter(parent__isnull=True).select_related('author', 'author__profile')
+    context = {
+        'post': post,
+        'comments': comments,
+    }
+    return render(request, 'blog/post_detail.html', context)
+
+
+@login_required
+@require_POST
+def comment_create(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.post = post
+        comment.author = request.user
+        comment.save()
+    else:
+        messages.error(request, 'Your comment could not be posted.')
+    return redirect(post.get_absolute_url() + '#comments')
 
 
 @login_required

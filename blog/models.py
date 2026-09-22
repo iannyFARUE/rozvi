@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models, transaction
 from django.db.models import F
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import Truncator, slugify
 from PIL import Image
@@ -101,6 +102,9 @@ class Post(models.Model):
             suffix += 1
             slug = f'{base_slug}-{suffix}'
         return slug
+
+    def get_absolute_url(self):
+        return reverse('blog-post-detail', kwargs={'slug': self.slug})
 
     @property
     def comment_count(self):
