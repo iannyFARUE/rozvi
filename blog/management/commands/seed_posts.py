@@ -212,6 +212,237 @@ POSTS = [
         'claps_count': 843,
         'featured': False,
     },
+    {
+        'title': 'Why I Stopped Taking Notes During Meetings',
+        'excerpt': 'Writing everything down felt productive. It was actually '
+                   'costing me the one thing meetings are supposed to produce: '
+                   'a decision.',
+        'content': (
+            "Writing everything down felt productive. It was actually costing "
+            "me the one thing most meetings are supposed to produce: a decision "
+            "everyone in the room actually agreed to.\n\n"
+            "Note-taking gave my hands something to do while my attention drifted "
+            "to the next bullet point instead of the person talking. Once I put "
+            "the notebook away and just listened, I started noticing when a "
+            "conversation was circling instead of converging — and said so.\n\n"
+            "Now I write exactly one thing per meeting: the decision, and who "
+            "owns the next step. Everything else was never going to get read again."
+        ),
+        'author_key': 'naomi-chen',
+        'topic': 'Productivity',
+        'date_posted': datetime(2026, 7, 20, 9, 0, tzinfo=dt_timezone.utc),
+        'read_time': 4,
+        'claps_count': 512,
+        'featured': False,
+    },
+    {
+        'title': 'The Undo Button Problem in Product Design',
+        'excerpt': 'Most destructive actions in software still ask "are you sure?" '
+                   'instead of just letting you undo. The difference matters more '
+                   'than it looks.',
+        'content': (
+            "Most destructive actions in software still ask 'are you sure?' "
+            "instead of just letting you undo. The difference looks small and "
+            "isn't.\n\n"
+            "A confirmation dialog interrupts you before you've finished the "
+            "thought, so people learn to click through it on autopilot. An undo "
+            "button lets the action happen, then gives you a real, low-stakes "
+            "window to change your mind after you've actually seen the result.\n\n"
+            "If a feature is important enough to protect, it's important enough "
+            "to protect with something better than a modal nobody reads."
+        ),
+        'author_key': 'marcus-webb',
+        'topic': 'Opinion',
+        'date_posted': datetime(2026, 7, 13, 9, 0, tzinfo=dt_timezone.utc),
+        'read_time': 5,
+        'claps_count': 734,
+        'featured': False,
+    },
+    {
+        'title': "Caching Is Easy Until It Isn't",
+        'excerpt': 'Adding a cache is a five-minute change. Keeping it correct '
+                   'under real traffic is the part nobody warns you about.',
+        'content': (
+            "Adding a cache is a five-minute change: wrap the slow call, set a "
+            "TTL, ship it. Keeping it correct under real traffic is the part "
+            "nobody warns you about.\n\n"
+            "Every cache eventually asks you the same question: what happens "
+            "when the underlying data changes before the TTL expires? "
+            "Invalidation strategies range from 'wait it out' to elaborate "
+            "event-driven busting, and picking the wrong one for your access "
+            "pattern is how you end up debugging a bug that only reproduces on "
+            "Tuesdays.\n\n"
+            "Start with the simplest strategy that tolerates being wrong for a "
+            "few seconds. Most systems can afford that far more often than they "
+            "can afford the complexity of the alternative."
+        ),
+        'author_key': 'ian-farai-madhara',
+        'topic': 'Software Engineering',
+        'date_posted': datetime(2026, 7, 6, 9, 0, tzinfo=dt_timezone.utc),
+        'read_time': 6,
+        'claps_count': 891,
+        'featured': False,
+    },
+    {
+        'title': 'What Five Years of Freelancing Taught Me About Saying No',
+        'excerpt': 'Every yes to a project is a quiet no to something else. It '
+                   'took me years of overcommitting to actually believe that.',
+        'content': (
+            "Every yes to a project is a quiet no to something else — usually "
+            "the next client, the good ones, who ask when you're already fully "
+            "booked and unwilling to admit it.\n\n"
+            "For a long time I said yes to everything because turning down work "
+            "felt like turning down income, full stop. What actually happened "
+            "was slower delivery, more mistakes, and a reputation for being "
+            "stretched thin rather than in demand.\n\n"
+            "Saying no early, clearly, and without a guilty over-explanation "
+            "turned out to be the more professional move, not the riskier one."
+        ),
+        'author_key': 'sofia-delgado',
+        'topic': 'Career',
+        'date_posted': datetime(2026, 6, 29, 9, 0, tzinfo=dt_timezone.utc),
+        'read_time': 5,
+        'claps_count': 1023,
+        'featured': False,
+    },
+    {
+        'title': 'The Small Talk I Actually Miss From the Office',
+        'excerpt': "Remote work fixed most of what I hated about commuting. It "
+                   "also quietly removed the conversations I didn't know I needed.",
+        'content': (
+            "Remote work fixed most of what I hated about commuting. It also "
+            "quietly removed a category of conversation I didn't know I needed "
+            "until it was gone.\n\n"
+            "The five minutes waiting for coffee, the aside after a meeting "
+            "technically ended — those weren't wasted time, they were where half "
+            "the actual context about a project used to travel. Slack threads "
+            "are a poor substitute; they require someone to already believe the "
+            "information is worth typing out.\n\n"
+            "I don't want the commute back. I do think we underrated how much "
+            "of a team's shared understanding was never actually written down "
+            "anywhere on purpose."
+        ),
+        'author_key': 'priya-anand',
+        'topic': 'Life',
+        'date_posted': datetime(2026, 6, 22, 9, 0, tzinfo=dt_timezone.utc),
+        'read_time': 4,
+        'claps_count': 1487,
+        'featured': False,
+    },
+    {
+        'title': "A Beginner's Guide to Database Migrations",
+        'excerpt': 'Migrations feel intimidating right up until you understand '
+                   'that they are just version control for your schema.',
+        'content': (
+            "Migrations feel intimidating right up until you understand that "
+            "they are, at their core, just version control for your schema.\n\n"
+            "Each migration is a small, ordered, reversible change: add this "
+            "column, backfill that data, drop this old table once nothing reads "
+            "from it anymore. The framework's job is just to track which of "
+            "those changes have already been applied to a given database, the "
+            "same way git tracks which commits are already on a branch.\n\n"
+            "The habit that saves you the most pain is keeping migrations small "
+            "and running them constantly, the same way small, frequent commits "
+            "save you from painful merges."
+        ),
+        'author_key': 'marcus-webb',
+        'topic': 'Databases',
+        'date_posted': datetime(2026, 6, 15, 9, 0, tzinfo=dt_timezone.utc),
+        'read_time': 7,
+        'claps_count': 658,
+        'featured': False,
+    },
+    {
+        'title': "Type Hints Won't Save a Bad API, But They Help",
+        'excerpt': "Type hints don't make Python fast or safe by themselves. "
+                   "What they actually buy you is a much shorter feedback loop.",
+        'content': (
+            "Type hints don't make Python fast or safe by themselves — the "
+            "interpreter mostly ignores them at runtime. What they actually buy "
+            "you is a much shorter feedback loop between writing a mistake and "
+            "seeing it.\n\n"
+            "A function signature that says what it expects and what it returns "
+            "turns your editor into a collaborator instead of a text box. That "
+            "matters more as a codebase grows past the size one person can hold "
+            "in their head.\n\n"
+            "They're not a substitute for tests, and they won't rescue a "
+            "genuinely confusing API. But paired with a decent design, they make "
+            "that design much harder to misuse by accident."
+        ),
+        'author_key': 'naomi-chen',
+        'topic': 'Python',
+        'date_posted': datetime(2026, 6, 8, 9, 0, tzinfo=dt_timezone.utc),
+        'read_time': 6,
+        'claps_count': 720,
+        'featured': False,
+    },
+    {
+        'title': 'Why I Write Design Docs Before Code',
+        'excerpt': 'A design doc is cheaper to throw away than a pull request. '
+                   'That alone is reason enough to write one first.',
+        'content': (
+            "A design doc is cheaper to throw away than a pull request, and "
+            "that alone is reason enough to write one before touching an "
+            "editor.\n\n"
+            "Putting a plan in prose forces you to notice the parts you were "
+            "hand-waving past — the edge case you hadn't picked a behavior for, "
+            "the dependency you assumed would just work. Reviewers catch these "
+            "far more cheaply in a paragraph than in a thousand lines of diff.\n\n"
+            "The doc doesn't need to be long or formal. It just needs to exist "
+            "long enough for someone else to poke a hole in it before the code does."
+        ),
+        'author_key': 'ian-farai-madhara',
+        'topic': 'Software Engineering',
+        'date_posted': datetime(2026, 6, 1, 9, 0, tzinfo=dt_timezone.utc),
+        'read_time': 5,
+        'claps_count': 601,
+        'featured': False,
+    },
+    {
+        'title': 'The Myth of the 10x Engineer',
+        'excerpt': 'The most productive engineers I know are not typing faster '
+                   'than everyone else. They are just causing far fewer problems.',
+        'content': (
+            "The most productive engineers I know are not typing faster than "
+            "everyone else, or holding more of the codebase in their head. "
+            "They are just causing far fewer problems for the people around "
+            "them.\n\n"
+            "That shows up as clear commit messages, pull requests scoped to one "
+            "idea, and a habit of leaving a system slightly easier to understand "
+            "than they found it. None of that is a superpower. It's closer to "
+            "tidiness, applied consistently over years.\n\n"
+            "If a '10x engineer' exists, the multiplier is on the team around "
+            "them, not on their own output."
+        ),
+        'author_key': 'sofia-delgado',
+        'topic': 'Opinion',
+        'date_posted': datetime(2026, 5, 25, 9, 0, tzinfo=dt_timezone.utc),
+        'read_time': 4,
+        'claps_count': 1890,
+        'featured': False,
+    },
+    {
+        'title': 'How I Finally Learned to Ship Unfinished Work',
+        'excerpt': "Waiting until something felt done meant almost nothing ever "
+                   "shipped. Lowering the bar on purpose is what actually fixed it.",
+        'content': (
+            "Waiting until something felt done meant almost nothing ever "
+            "shipped. What actually fixed it was lowering the bar on purpose, "
+            "not raising my discipline.\n\n"
+            "I started asking a smaller question before every release: is this "
+            "honest and useful right now, even if it's incomplete? A rough "
+            "version answering that in the affirmative beats a polished version "
+            "that never leaves a draft folder.\n\n"
+            "Feedback from something real in someone else's hands taught me more "
+            "in a week than another month of solo polishing ever did."
+        ),
+        'author_key': 'priya-anand',
+        'topic': 'Startups',
+        'date_posted': datetime(2026, 5, 18, 9, 0, tzinfo=dt_timezone.utc),
+        'read_time': 5,
+        'claps_count': 947,
+        'featured': False,
+    },
 ]
 
 

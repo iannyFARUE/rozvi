@@ -1,12 +1,15 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from .forms import CommentForm, PostForm
 from .models import Post
+
+POSTS_PER_PAGE = 6
 
 
 def _distinct_topics():
@@ -18,9 +21,13 @@ def _distinct_topics():
 
 
 def home(request):
-    posts = Post.objects.select_related('author', 'author__profile')
-    staff_picks = posts.filter(featured=True)[:3]
+    posts_qs = Post.objects.select_related('author', 'author__profile')
+    staff_picks = posts_qs.filter(featured=True)[:3]
     topics = _distinct_topics()
+
+    paginator = Paginator(posts_qs, POSTS_PER_PAGE)
+    posts = paginator.get_page(request.GET.get('page'))
+
     context = {
         'posts': posts,
         'staff_picks': staff_picks,

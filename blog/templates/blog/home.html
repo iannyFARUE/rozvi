@@ -36,6 +36,7 @@
   </div>
 
   <div id="feed" class="mx-auto grid max-w-[1336px] grid-cols-1 gap-x-16 px-4 pb-24 sm:px-6 lg:grid-cols-[1fr_336px]">
+    <div>
     <div class="divide-y divide-gray-200">
       {% for post in posts %}
       <article class="group flex gap-4 py-8 sm:gap-6">
@@ -81,6 +82,31 @@
         <div class="hidden h-28 w-28 shrink-0 rounded-md bg-gradient-to-br {% cycle 'from-rose-200 via-orange-100 to-amber-200' 'from-emerald-200 via-teal-100 to-cyan-200' 'from-indigo-200 via-violet-100 to-purple-200' 'from-sky-200 via-blue-100 to-indigo-200' 'from-amber-200 via-yellow-100 to-lime-200' 'from-pink-200 via-rose-100 to-red-200' %} sm:block sm:h-32 sm:w-44"></div>
       </article>
       {% endfor %}
+    </div>
+
+      {% if posts.has_other_pages %}
+      <nav class="mt-4 flex items-center justify-center gap-1 border-t border-gray-200 pt-8 text-sm">
+        {% if posts.has_previous %}
+        <a href="?page={{ posts.previous_page_number }}" class="rounded-md px-3 py-1.5 text-gray-600 hover:bg-gray-100">
+          ← Previous
+        </a>
+        {% endif %}
+
+        {% for page_num in posts.paginator.page_range %}
+        {% if page_num == posts.number %}
+        <span class="rounded-md bg-gray-900 px-3 py-1.5 font-medium text-white">{{ page_num }}</span>
+        {% else %}
+        <a href="?page={{ page_num }}" class="rounded-md px-3 py-1.5 text-gray-600 hover:bg-gray-100">{{ page_num }}</a>
+        {% endif %}
+        {% endfor %}
+
+        {% if posts.has_next %}
+        <a href="?page={{ posts.next_page_number }}" class="rounded-md px-3 py-1.5 text-gray-600 hover:bg-gray-100">
+          Next →
+        </a>
+        {% endif %}
+      </nav>
+      {% endif %}
     </div>
 
     <aside class="hidden lg:block">
