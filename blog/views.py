@@ -27,9 +27,11 @@ def home(request):
 
     paginator = Paginator(posts_qs, POSTS_PER_PAGE)
     posts = paginator.get_page(request.GET.get('page'))
+    page_range = paginator.get_elided_page_range(posts.number, on_each_side=3, on_ends=1)
 
     context = {
         'posts': posts,
+        'page_range': page_range,
         'staff_picks': staff_picks,
         'topics': topics,
     }
