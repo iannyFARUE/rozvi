@@ -1,0 +1,31 @@
+{% if page_obj.has_other_pages %}
+<nav class="mt-4 flex flex-wrap items-center justify-center gap-1 border-t border-gray-200 pt-8 text-sm">
+  <a href="?page=1" class="rounded-md px-3 py-1.5 text-gray-600 hover:bg-gray-100">
+    « First
+  </a>
+  {% if page_obj.has_previous %}
+  <a href="?page={{ page_obj.previous_page_number }}" class="rounded-md px-3 py-1.5 text-gray-600 hover:bg-gray-100">
+    ← Previous
+  </a>
+  {% endif %}
+
+  {% for page_num in page_range %}
+  {% if page_num == page_obj.paginator.ELLIPSIS %}
+  <span class="px-2 text-gray-400">{{ page_num }}</span>
+  {% elif page_num == page_obj.number %}
+  <span class="rounded-md bg-gray-900 px-3 py-1.5 font-medium text-white">{{ page_num }}</span>
+  {% else %}
+  <a href="?page={{ page_num }}" class="rounded-md px-3 py-1.5 text-gray-600 hover:bg-gray-100">{{ page_num }}</a>
+  {% endif %}
+  {% endfor %}
+
+  {% if page_obj.has_next %}
+  <a href="?page={{ page_obj.next_page_number }}" class="rounded-md px-3 py-1.5 text-gray-600 hover:bg-gray-100">
+    Next →
+  </a>
+  {% endif %}
+  <a href="?page={{ page_obj.paginator.num_pages }}" class="rounded-md px-3 py-1.5 text-gray-600 hover:bg-gray-100">
+    Last »
+  </a>
+</nav>
+{% endif %}
