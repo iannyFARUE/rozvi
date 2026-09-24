@@ -1,0 +1,69 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Help — Rozvi{% endblock %}
+
+{% block content %}
+  <div class="mx-auto max-w-2xl px-4 py-20 sm:px-6">
+    <h1 class="font-serif text-4xl font-bold text-gray-900 sm:text-5xl">Help</h1>
+    <p class="mt-6 text-lg leading-relaxed text-gray-600">
+      Answers to common questions about reading, writing, and managing your stories on Rozvi.
+    </p>
+
+    <div class="mt-12 space-y-10">
+      <section>
+        <h2 class="font-serif text-xl font-bold text-gray-900">Getting started</h2>
+        <p class="mt-2 leading-relaxed text-gray-600">
+          Create a free account from
+          <a href="{% url 'users-register' %}" class="text-green-700 underline hover:text-green-800">Get started</a>,
+          then sign in any time from the
+          <a href="{% url 'users-login' %}" class="text-green-700 underline hover:text-green-800">Sign in</a> link
+          in the header.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-serif text-xl font-bold text-gray-900">Writing and publishing a story</h2>
+        <p class="mt-2 leading-relaxed text-gray-600">
+          Once signed in, click <strong>Write</strong> in the header to open the story editor. Give your story a
+          title, choose a topic, and write your content — an excerpt and estimated read time are generated for you
+          automatically if you leave them blank. You can edit or delete any story you've published from your
+          <a href="{% url 'users-profile' %}" class="text-green-700 underline hover:text-green-800">profile</a> page.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-serif text-xl font-bold text-gray-900">Searching for stories</h2>
+        <p class="mt-2 leading-relaxed text-gray-600">
+          Use the search box in the header to find stories by title, content, topic, or author. You can also
+          search directly from the
+          <a href="{% url 'blog-search' %}" class="text-green-700 underline hover:text-green-800">search page</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-serif text-xl font-bold text-gray-900">Claps and comments</h2>
+        <p class="mt-2 leading-relaxed text-gray-600">
+          Signed-in readers can clap for a story to show appreciation, and can leave comments and replies at the
+          bottom of any story.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-serif text-xl font-bold text-gray-900">Resetting your password</h2>
+        <p class="mt-2 leading-relaxed text-gray-600">
+          Forgot your password? Use the
+          <a href="{% url 'password_reset' %}" class="text-green-700 underline hover:text-green-800">password reset</a>
+          form to receive a reset link by email.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-serif text-xl font-bold text-gray-900">Still need help?</h2>
+        <p class="mt-2 leading-relaxed text-gray-600">
+          Learn more about the project on the
+          <a href="{% url 'blog-about' %}" class="text-green-700 underline hover:text-green-800">About</a> page.
+        </p>
+      </section>
+    </div>
+  </div>
+{% endblock %}

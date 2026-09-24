@@ -70,6 +70,10 @@ def about(request):
     return render(request, 'blog/about.html')
 
 
+def help_center(request):
+    return render(request, 'blog/help.html')
+
+
 def post_detail(request, slug):
     post = get_object_or_404(
         Post.objects.select_related('author', 'author__profile'),
