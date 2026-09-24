@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
@@ -36,6 +37,33 @@ def home(request):
         'topics': topics,
     }
     return render(request, 'blog/home.html', context)
+
+
+def search(request):
+    query = request.GET.get('q', '').strip()
+    posts = Post.objects.none()
+
+    if query:
+        posts = Post.objects.select_related('author', 'author__profile').filter(
+            Q(title__icontains=query)
+            | Q(excerpt__icontains=query)
+            | Q(content__icontains=query)
+            | Q(topic__icontains=query)
+            | Q(author__username__icontains=query)
+            | Q(author__first_name__icontains=query)
+            | Q(author__last_name__icontains=query)
+        ).distinct()
+
+    paginator = Paginator(posts, POSTS_PER_PAGE)
+    results = paginator.get_page(request.GET.get('page'))
+    page_range = paginator.get_elided_page_range(results.number, on_each_side=3, on_ends=1)
+
+    context = {
+        'query': query,
+        'posts': results,
+        'page_range': page_range,
+    }
+    return render(request, 'blog/search_results.html', context)
 
 
 def about(request):

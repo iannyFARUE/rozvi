@@ -17,13 +17,19 @@
           <a href="{% url 'blog-home' %}" class="font-serif text-2xl font-bold tracking-tight text-gray-900">
             Rozvi
           </a>
-          <label class="hidden items-center gap-2 rounded-full bg-gray-100 px-4 py-1.5 text-sm text-gray-500 md:flex">
+          <form action="{% url 'blog-search' %}" method="get" class="hidden items-center gap-2 rounded-full bg-gray-100 px-4 py-1.5 text-sm text-gray-500 md:flex">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4 shrink-0">
               <circle cx="11" cy="11" r="7" stroke-linecap="round" stroke-linejoin="round" />
               <path d="M21 21l-4.3-4.3" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-            <input type="text" placeholder="Search" class="w-32 bg-transparent placeholder-gray-500 outline-none lg:w-48" />
-          </label>
+            <input
+              type="search"
+              name="q"
+              value="{{ request.GET.q }}"
+              placeholder="Search"
+              class="w-32 bg-transparent placeholder-gray-500 outline-none lg:w-48"
+            />
+          </form>
         </div>
 
         <nav class="flex items-center gap-5">
@@ -57,13 +63,19 @@
       </div>
 
       <div id="mobile-menu" class="hidden border-t border-gray-200 px-4 py-3 md:hidden">
-        <label class="mb-3 flex items-center gap-2 rounded-full bg-gray-100 px-4 py-1.5 text-sm text-gray-500">
+        <form action="{% url 'blog-search' %}" method="get" class="mb-3 flex items-center gap-2 rounded-full bg-gray-100 px-4 py-1.5 text-sm text-gray-500">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4 shrink-0">
             <circle cx="11" cy="11" r="7" stroke-linecap="round" stroke-linejoin="round" />
             <path d="M21 21l-4.3-4.3" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <input type="text" placeholder="Search" class="w-full bg-transparent placeholder-gray-500 outline-none" />
-        </label>
+          <input
+            type="search"
+            name="q"
+            value="{{ request.GET.q }}"
+            placeholder="Search"
+            class="w-full bg-transparent placeholder-gray-500 outline-none"
+          />
+        </form>
         <div class="flex flex-col gap-3 text-sm text-gray-700">
           <a href="{% url 'blog-post-create' %}" class="flex items-center gap-1.5 hover:text-gray-900">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5">
